@@ -49,5 +49,4 @@ Available actions:
   Run through various troubleshooting checks and fixes.
 
 * `classroom page`
-   ** Unimplemented **
   This will page on call classroom support in case of emergency.

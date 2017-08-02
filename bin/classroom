@@ -95,7 +95,7 @@ begin
     # run troubleshooting scripts
 
   when :page
-    puts "Sorry, this is not implemented yet. Please use HipChat for now."
+    classroom.page
 
   when :help
     classroom.help
