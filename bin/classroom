@@ -1,0 +1,115 @@
+#! /usr/bin/env ruby
+require 'optparse'
+require 'logger'
+
+require 'classroom'
+
+$logger = Logger.new(STDOUT)
+$logger.level = Logger::INFO
+$logger.formatter = proc do |severity, datetime, progname, msg|
+    "#{severity}: #{msg}\n"
+end
+
+config = {}
+optparse = OptionParser.new { |opts|
+    opts.banner = "Usage : classroom <action> [subject] [options]
+
+        Manage Puppet classroom VMs and updating courseware. This includes
+        troubleshooting and maintenance tasks to be used as needed during
+        the delivery and facilities for resetting the VM for use across
+        multiple deliveries. This is pre-installed on the classroom VM.
+
+        Type courseware help for full usage instructions.
+
+"
+
+    opts.on("-d", "--debug", "Display debugging messages") do
+        $logger.level = Logger::DEBUG
+    end
+
+    opts.on("-f", "--force", "When restarting services, force a hard restart.") do
+      config[:force] = true
+    end
+
+    opts.separator('')
+
+    opts.on("-v", "--version", "Print out the version") do
+        require 'courseware/version'
+        puts Courseware::VERSION
+        exit
+    end
+
+    opts.on("-h", "--help", "Displays this help") do
+      puts opts
+      puts
+      exit 1
+    end
+}
+optparse.parse!
+
+# hardcode for now. Decide if we need configurability later
+config[:basedir]  = '/opt/pltraining'
+config[:bindir]   = "#{config[:basedir]}/bin"
+config[:confdir]  = "#{config[:basedir]}/etc/puppet"
+config[:specdir]  = "#{config[:basedir]}/spec"
+config[:learndot] = 'https://learn.puppet.com/manage/instructor/dashboard.html'
+
+# grab the arguments after we've scraped the options out
+verb, *subject = ARGV.collect {|arg| arg.to_sym }
+
+classroom = Classroom.new(config)
+begin
+  case verb
+  when :update
+    classroom.update
+    classroom.validate
+
+  when :validate
+    classroom.validate
+    # serverspec tests on the master MV
+
+  when :submit
+    classroom.submit
+    # submit classroom presentation stats
+
+  when :sanitize
+    classroom.sanitize
+    # remove users, etc to start a new delivery
+
+  when :performance
+    classroom.performance subject
+    # reset certificates, environments, node groups, courseware, etc
+    # is this even a thing???
+
+  when :reset
+    classroom.reset subject
+    # reset master certificates
+    # reset VM password
+
+  when :restart
+    classroom.restart subject
+    # restart PE services
+
+  when :troubleshoot
+    classroom.troubleshoot
+    # run troubleshooting scripts
+
+  when :page
+    puts "Sorry, this is not implemented yet. Please use HipChat for now."
+
+  when :help
+    classroom.help
+
+  when :shell
+    classroom.debug
+
+  else
+    $logger.warn "Unknown verb: #{verb}"
+    classroom.help
+
+  end
+rescue RuntimeError => e
+  puts "Error: #{e.message}"
+  puts e.backtrace.join("\n\t") if config[:debug]
+  exit 1
+end
