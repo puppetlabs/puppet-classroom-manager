@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency      "serverspec"
   s.add_dependency      "hocon"
   s.add_dependency      "rest-client"
+  s.add_dependency      "rake"
 
   s.description       = <<-desc
     Manage Puppet classroom VMs and updating courseware. This includes
