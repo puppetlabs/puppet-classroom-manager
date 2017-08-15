@@ -27,7 +27,7 @@ EOF
 
   def reset_password
     print "Enter new root password: "
-    password = gets.chomp
+    password = STDIN.gets.chomp
 
     %x(echo "root:#{password}"|chpasswd)
 
