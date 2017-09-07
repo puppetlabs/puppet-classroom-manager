@@ -5,7 +5,7 @@ class Classroom
 
     begin
       config = JSON.parse(File.read('/opt/pltraining/etc/classroom.json'))
-      pd_key = File.read('/opt/pltraining/etc/pagerduty.key')
+      pd_key = File.read('/opt/pltraining/etc/pagerduty.key').strip
     rescue => e
       puts "Cannot load configuration"
       puts e.message
@@ -18,24 +18,26 @@ class Classroom
     puts "https://github.com/puppetlabs/courseware/blob/master/TroubleshootingGuide.md"
     puts
     if confirm?("Have you done everything in the troubleshooting guide?") then
-      puts "Sending page. Make sure you've posted about the issue in HipChat."
-      config = load_metadata
-      page_message = "Instructor: #{config['name']}\n" +
+      print 'Describe the problem in a short sentence: '
+      description  = STDIN.gets.strip
+      page_message = "#{description}\n" +
                      "Email: #{config['email']}\n" +
-                     "Course: #{config['course']}\n" +
+                     "Course: #{config['course']} #{config['version']}\n" +
                      "ID: #{config['event_id']}"
       page_data = {
         "service_key" => pd_key,
         "event_type"  => "trigger",
         "description" => page_message
       }
-      response = RestClient.post(
+
+      puts "Sending page. Make sure you've posted about the issue in HipChat."
+      response = JSON.parse(RestClient.post(
         "https://events.pagerduty.com/generic/2010-04-15/create_event.json",
         page_data.to_json,
         :content_type => :json,
         :accept => :json
-      )
-      puts response
+      ))
+      puts response unless response['status'] == 'success'
     end
   end
 end
