@@ -1,4 +1,5 @@
 class Classroom
+  require 'classroom/page'
   require 'classroom/performance'
   require 'classroom/reset'
   require 'classroom/restart'
