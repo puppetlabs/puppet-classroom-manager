@@ -10,7 +10,7 @@ class Classroom
     master       = `puppet agent --configprint server`.strip
     classifier   = "http://#{master}:4433/classifier-api"
     known_groups = [ 'All Nodes', 'Agent-specified environment', 'Production environment', /PE / ]
-    known_users  = [ 'admin"=', 'api_user', 'deployer' ]
+    known_users  = [ 'admin', 'api_user', 'deployer' ]
     auth_info    = {
       'ca_certificate_path' => `puppet master --configprint localcacert`.strip,
       'certificate_path'    => `puppet master --configprint hostcert`.strip,
