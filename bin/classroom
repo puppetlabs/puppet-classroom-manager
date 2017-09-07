@@ -19,7 +19,7 @@ optparse = OptionParser.new { |opts|
         the delivery and facilities for resetting the VM for use across
         multiple deliveries. This is pre-installed on the classroom VM.
 
-        Type courseware help for full usage instructions.
+        Type classroom help for full usage instructions.
 
 "
 
