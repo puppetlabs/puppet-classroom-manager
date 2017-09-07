@@ -47,7 +47,7 @@ class Classroom
     end
 
     print "Checking Forge connection..."
-    if system("ping -c1 -W2 forge.puppet.com >/dev/null 2>&1")
+    if system("curl -s https://forge.puppet.com >/dev/null 2>&1")
       if legacy
         puts "Ensuring the latest version of pltraining/classroom in #{staging}..."
         system("puppet module upgrade pltraining/classroom --modulepath #{staging}")
