@@ -17,18 +17,18 @@ class Classroom
 
     print "Cleaning any stray .git directories in: #{codedir}..."
     sleep 1
-    system("find #{codedir} -name .git -type d -print -exec rm -rf {} \\;")
+    system("find #{codedir} -name .git -type d -print -exec rm -rf {} +")
     check_success
 
     print "Validating permissions on: #{codedir}..."
     sleep 1
-    system("find #{codedir} '!' -user pe-puppet -print -exec chown pe-puppet:pe-puppet {} \\;")
+    system("find #{codedir} '!' -user pe-puppet -print -exec chown pe-puppet:pe-puppet {} +")
     check_success
 
     if codedir != staging
       puts "Validating permissions on: #{staging}..."
       sleep 1
-      system("find #{staging} '!' -user pe-puppet -print -exec chown pe-puppet:pe-puppet {} \\;")
+      system("find #{staging} '!' -user pe-puppet -print -exec chown pe-puppet:pe-puppet {} +")
       check_success
     end
 
