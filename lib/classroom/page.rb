@@ -20,8 +20,12 @@ class Classroom
     if confirm?("Have you done everything in the troubleshooting guide?") then
       print 'Describe the problem in a short sentence: '
       description  = STDIN.gets.strip
+
+      print 'Enter the email or phone number where you can be reached: '
+      contact      = STDIN.gets.strip
+
       page_message = "#{description}\n" +
-                     "Email: #{config['email']}\n" +
+                     "Contact: #{contact}\n" +
                      "Course: #{config['course']} #{config['version']}\n" +
                      "ID: #{config['event_id']}"
       page_data = {
