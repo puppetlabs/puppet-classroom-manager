@@ -37,9 +37,9 @@ class Classroom
       FileUtils.rm(filename)
 
     rescue LoadError, StandardError => e
-      LOGGER.warn "S3 upload failed. No network?"
-      LOGGER.warn e.message
-      LOGGER.debug e.backtrace
+      $logger.warn "S3 upload failed. No network?"
+      $logger.warn e.message
+      $logger.debug e.backtrace
     end
 
     # clean up for next delivery
