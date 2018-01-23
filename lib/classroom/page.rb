@@ -6,6 +6,7 @@ class Classroom
     begin
       config = JSON.parse(File.read('/opt/pltraining/etc/classroom.json'))
       pd_key = File.read('/opt/pltraining/etc/pagerduty.key').strip
+      raise 'Missing PagerDuty key' if pd_key.empty?
     rescue => e
       puts "Cannot load configuration"
       puts e.message
