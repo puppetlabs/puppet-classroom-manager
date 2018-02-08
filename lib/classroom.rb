@@ -42,6 +42,28 @@ class Classroom
     end
   end
 
+  def showoff_config
+    presentation = showoff_working_directory()
+    data         = JSON.parse(File.read("#{presentation}/stats/metadata.json")) rescue {}
+
+    data['event_id'] ||= Time.now.to_i
+    data['course']   ||= File.basename(presentation.strip)
+    data
+  end
+
+  def showoff_working_directory
+    # get the path of the currently configured showoff presentation
+    data = {}
+    path = '/usr/lib/systemd/system/showoff-courseware.service'
+    File.read(path).each_line do |line|
+      setting = line.split('=')
+      next unless setting.size == 2
+
+      data[setting.first] = setting.last
+    end
+    data['WorkingDirectory'].strip
+  end
+
   def help
     require 'classroom/help'
     puts Classroom::HELP

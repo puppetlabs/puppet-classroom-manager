@@ -3,13 +3,12 @@ class Classroom
     require 'fileutils'
     require 'aws-sdk'
 
+    config   = showoff_config
+    event_id = config['event_id']
+    course   = config['course']
+
     print 'Enter your Puppet email address: '
     email = STDIN.gets.strip
-
-    presentation = showoff_working_directory()
-    data         = JSON.parse(File.read("#{presentation}/stats/metadata.json")) rescue {}
-    event_id     = data['event_id'] || Time.now.to_i
-    course       = data['course']   || File.basename(presentation.strip)
 
     if email =~ /@puppet(labs)?.com$/
       puts "Please go to your learn dashboard and ensure that attendance is accurate"
@@ -52,19 +51,6 @@ class Classroom
     FileUtils.rm_f("#{presentation}/_files/share/nearby_events.html")
     system("puppet resource service showoff-courseware ensure=running > /dev/null")
 
-  end
-
-  def showoff_working_directory
-    # get the path of the currently configured showoff presentation
-    data = {}
-    path = '/usr/lib/systemd/system/showoff-courseware.service'
-    File.read(path).each_line do |line|
-      setting = line.split('=')
-      next unless setting.size == 2
-
-      data[setting.first] = setting.last
-    end
-    data['WorkingDirectory'].strip
   end
 
 end
