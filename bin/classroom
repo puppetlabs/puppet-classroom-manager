@@ -35,7 +35,7 @@ optparse = OptionParser.new { |opts|
 
     opts.on("-v", "--version", "Print out the version") do
         require 'classroom/version'
-        puts Courseware::VERSION
+        puts Classroom::VERSION
         exit
     end
 
