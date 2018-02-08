@@ -52,16 +52,22 @@ class Classroom
   end
 
   def showoff_working_directory
-    # get the path of the currently configured showoff presentation
-    data = {}
-    path = '/usr/lib/systemd/system/showoff-courseware.service'
-    File.read(path).each_line do |line|
-      setting = line.split('=')
-      next unless setting.size == 2
+    begin
+      # get the path of the currently configured showoff presentation
+      data = {}
+      path = '/usr/lib/systemd/system/showoff-courseware.service'
+      File.read(path).each_line do |line|
+        setting = line.split('=')
+        next unless setting.size == 2
 
-      data[setting.first] = setting.last
+        data[setting.first] = setting.last
+      end
+      data['WorkingDirectory'].strip
+    rescue Errno::ENOENT => e
+      $logger.warn 'Cannot find classroom Showoff presentation'
+      $logger.debug e.message
+      'unconfigured'
     end
-    data['WorkingDirectory'].strip
   end
 
   def help
