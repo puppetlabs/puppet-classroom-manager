@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
   s.has_rdoc          = false
   s.require_path      = "lib"
   s.executables       = %w( classroom )
-  s.files             = %w( README.md LICENSE )
+  s.files             = %w( CHANGELOG.md README.md LICENSE )
   s.files            += Dir.glob("lib/**/*")
   s.files            += Dir.glob("bin/**/*")
   s.add_dependency      "aws-sdk"
