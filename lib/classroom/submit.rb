@@ -3,6 +3,7 @@ class Classroom
     require 'fileutils'
     require 'aws-sdk'
 
+    presentation = showoff_working_directory
     config   = showoff_config
     event_id = config['event_id']
     course   = config['course']
