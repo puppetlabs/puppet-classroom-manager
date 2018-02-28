@@ -48,6 +48,7 @@ class Classroom
 
     data['event_id'] ||= Time.now.to_i
     data['course']   ||= File.basename(presentation.strip)
+    data['path']     ||= presentation
     data
   end
 

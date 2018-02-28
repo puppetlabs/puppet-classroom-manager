@@ -3,10 +3,10 @@ class Classroom
     require 'fileutils'
     require 'aws-sdk'
 
-    presentation = showoff_working_directory
     config   = showoff_config
     event_id = config['event_id']
     course   = config['course']
+    location = config['path']
 
     print 'Enter your Puppet email address: '
     email = STDIN.gets.strip
@@ -34,7 +34,7 @@ class Classroom
 
       filename = "classroom-stats-#{course}-#{email}-#{event_id}.tar.gz"
       fullpath = "/var/cache/#{filename}"
-      system("tar -cf #{fullpath} #{presentation}/stats/")
+      system("tar -cf #{fullpath} #{location}/stats/")
       obj = s3.bucket('classroom-statistics').object(filename)
       obj.upload_file(fullpath)
       FileUtils.rm(fullpath)
@@ -47,9 +47,9 @@ class Classroom
 
     # clean up for next delivery
     system("puppet resource service showoff-courseware ensure=stopped > /dev/null")
-    FileUtils.rm_rf("#{presentation}/stats")
-    FileUtils.rm_f("#{presentation}/courseware.yaml")
-    FileUtils.rm_f("#{presentation}/_files/share/nearby_events.html")
+    FileUtils.rm_rf("#{location}/stats")
+    FileUtils.rm_f("#{location}/courseware.yaml")
+    FileUtils.rm_f("#{location}/_files/share/nearby_events.html")
     system("puppet resource service showoff-courseware ensure=running > /dev/null")
 
   end
