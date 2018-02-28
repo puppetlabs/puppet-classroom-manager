@@ -1,3 +1,6 @@
+## v0.0.5
+* Corrected undefined variable allowing stats submission
+
 ## v0.0.4
 * Corrected page & submit behaviour
 * Allowed for paging even when the classroom isn't yet configured
