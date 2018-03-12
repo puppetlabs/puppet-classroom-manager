@@ -1,3 +1,6 @@
+## v0.0.6
+* Corrected troubleshooting task
+
 ## v0.0.5
 * Corrected undefined variable allowing stats submission
 
