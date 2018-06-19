@@ -127,9 +127,8 @@ class Classroom
     puts '  * journalctl -eu abalone'
     puts '  * journalctl -eu puppetfactory'
     puts '  * journalctl -eu showoff-courseware'
-    puts '  * reset_ssl_certificates.sh'
-    puts '  * restart_classroom_services.rb'
-    puts '  * dependency_nuke.rb'
+    puts '  * classroom reset certificates'
+    puts '  * classroom restart ${1}'
     puts
     puts 'Have you searched the Troubleshooting Guide for your issue?'
     puts "If you're still stuck, page the on-call support with 'classroom page'"
@@ -140,7 +139,7 @@ class Classroom
     ssldir        = '/etc/puppetlabs/puppet/ssl'
     puppetdbcerts = '/etc/puppetlabs/puppetdb/ssl'
     consolecerts  = '/opt/puppetlabs/server/data/console-services/certs'
-    pgsqlcerts    = '/opt/puppetlabs/server/data/postgresql/9.4/data/certs'
+    pgsqlcerts    = '/opt/puppetlabs/server/data/postgresql/9.6/data/certs'
     orchcerts     = '/etc/puppetlabs/orchestration-services/ssl'
 
     cert = same_file("#{ssldir}/certs/#{certname}.pem", [

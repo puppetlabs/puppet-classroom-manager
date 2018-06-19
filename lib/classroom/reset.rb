@@ -49,7 +49,7 @@ EOF
     ssldir        = '/etc/puppetlabs/puppet/ssl'
     puppetdbcerts = '/etc/puppetlabs/puppetdb/ssl'
     consolecerts  = '/opt/puppetlabs/server/data/console-services/certs'
-    pgsqlcerts    = '/opt/puppetlabs/server/data/postgresql/9.4/data/certs'
+    pgsqlcerts    = '/opt/puppetlabs/server/data/postgresql/9.6/data/certs'
     orchcerts     = '/etc/puppetlabs/orchestration-services/ssl'
 
     ["puppet", "puppetdb", "console-services", "postgresql", "orchestration"].each do |path|

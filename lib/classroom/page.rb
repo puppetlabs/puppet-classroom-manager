@@ -13,7 +13,7 @@ class Classroom
       exit 1
     end
 
-    puts "---------  You're about to page and possibly wake somone up.  ---------"
+    puts "---------  You're about to page and possibly wake someone up.  ---------"
     puts "Please check the Troubleshooting Guide for solutions to common problems."
     puts
     puts "https://github.com/puppetlabs/courseware/blob/master/TroubleshootingGuide.md"
