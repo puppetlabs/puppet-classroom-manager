@@ -1,3 +1,6 @@
+## v0.0.7
+* Updated paths and script names for PE 2018.1.0 LTS
+
 ## v0.0.6
 * Corrected troubleshooting task
 
